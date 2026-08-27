@@ -1,4 +1,5 @@
 const Admin = require('../models/Admin');
+const Upload = require('../models/Upload');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendAdminAccessRequestNotification } = require('../utils/mailer');
@@ -22,7 +23,15 @@ exports.signup = async (req, res) => {
       });
     }
 
-    const identificationUrl = `/uploads/identification/${req.file.filename}`;
+    const storedIdentification = await Upload.create({
+      data: req.file.buffer,
+      mimeType: req.file.mimetype,
+      originalName: req.file.originalname || '',
+      size: req.file.size || 0,
+      category: 'identification'
+    });
+
+    const identificationUrl = `/api/uploads/identification/${storedIdentification._id}`;
 
     const trimmedUsername = username.toLowerCase().trim();
     const trimmedEmail = email.toLowerCase().trim();
@@ -53,6 +62,7 @@ exports.signup = async (req, res) => {
       email: trimmedEmail,
       referenceLink: referenceLink ? referenceLink.trim() : '',
       identificationUrl,
+      identificationUploadId: storedIdentification._id,
       status: 'pending',
       role: 'admin'
     });

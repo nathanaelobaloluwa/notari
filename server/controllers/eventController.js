@@ -1,4 +1,5 @@
 const Event = require('../models/Event');
+const Upload = require('../models/Upload');
 const { sendTicketConfirmation } = require('../utils/mailer');
 
 // GET /api/events/mine - List only the logged-in admin's events
@@ -88,7 +89,15 @@ exports.createEvent = async (req, res) => {
       });
     }
 
-    const flyerUrl = `/uploads/${req.admin.id}/${Date.now()}_${req.file.originalname}`;
+    const storedFlyer = await Upload.create({
+      data: req.file.buffer,
+      mimeType: req.file.mimetype,
+      originalName: req.file.originalname || '',
+      size: req.file.size || 0,
+      category: 'flyer'
+    });
+
+    const flyerUrl = `/api/uploads/flyer/${storedFlyer._id}`;
 
     const newEvent = new Event({
       eventName: eventName.trim(),
@@ -100,6 +109,7 @@ exports.createEvent = async (req, res) => {
       contact: contact ? contact.trim() : '',
       capacity: Number(capacity) >= 0 ? Number(capacity) : 0,
       flyerUrl,
+      flyerUploadId: storedFlyer._id,
       createdBy: req.admin.id
     });
 

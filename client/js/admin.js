@@ -527,9 +527,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const identificationUrl = req.identificationUrl || '';
           const normalizedIdUrl = identificationUrl
-            ? identificationUrl.startsWith('/uploads/identification/')
+            ? identificationUrl.startsWith('/api/uploads/') || identificationUrl.startsWith('/uploads/')
               ? identificationUrl
-              : `/uploads/identification/${identificationUrl.replace(/^\/+/, '')}`
+              : `/api/uploads/identification/${identificationUrl.replace(/^\/+/, '')}`
             : '';
           const absoluteIdUrl = normalizedIdUrl ? `${window.location.origin}${normalizedIdUrl}` : '';
          const identificationHtml = absoluteIdUrl

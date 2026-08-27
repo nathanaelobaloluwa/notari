@@ -4,25 +4,9 @@ const authController = require('../controllers/authController');
 const requireAdmin = require('../middleware/requireAdmin');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-
-const identificationUploadDir = path.join(__dirname, '..', 'uploads', 'identification');
-if (!fs.existsSync(identificationUploadDir)) {
-  fs.mkdirSync(identificationUploadDir, { recursive: true });
-}
-
-const identificationStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, identificationUploadDir);
-  },
-  filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    cb(null, `${timestamp}_${file.originalname}`);
-  }
-});
 
 const uploadIdentification = multer({
-  storage: identificationStorage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;

@@ -7,6 +7,7 @@ const adminSchema = new mongoose.Schema({
   email:        { type: String, trim: true, lowercase: true, default: '' },
   referenceLink:{ type: String, trim: true, default: '' },
   identificationUrl: { type: String, trim: true, default: '' },
+  identificationUploadId: { type: mongoose.Schema.Types.ObjectId, ref: 'Upload', default: null },
   status:       { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
   role:         { type: String, enum: ['superadmin', 'admin'], default: 'admin' },
   createdAt:    { type: Date, default: Date.now }

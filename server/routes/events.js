@@ -4,34 +4,14 @@ const eventController = require('../controllers/eventController');
 const requireAdmin = require('../middleware/requireAdmin');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 
 function noStore(req, res, next) {
   res.set('Cache-Control', 'no-store');
   next();
 }
 
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const adminDir = path.join(uploadDir, req.admin?.id || 'temp');
-    if (!fs.existsSync(adminDir)) {
-      fs.mkdirSync(adminDir, { recursive: true });
-    }
-    cb(null, adminDir);
-  },
-  filename: (req, file, cb) => {
-    const timestamp = Date.now();
-    cb(null, `${timestamp}_${file.originalname}`);
-  }
-});
-
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;

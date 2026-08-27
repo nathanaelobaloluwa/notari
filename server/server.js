@@ -8,6 +8,7 @@ const seedData = require('./utils/seed');
 const eventRoutes = require('./routes/events');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const uploadRoutes = require('./routes/uploads');
 const requireAdmin = require('./middleware/requireAdmin');
 const authController = require('./controllers/authController');
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static frontend files
 const clientPath = path.join(__dirname, '..', 'client');
 const uploadsPath = path.join(__dirname, 'uploads');
+// Legacy compatibility for previously disk-stored uploads.
 app.use('/uploads', express.static(uploadsPath));
 app.use(express.static(clientPath));
 
@@ -28,6 +30,7 @@ app.use(express.static(clientPath));
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/uploads', uploadRoutes);
 
 // Alias for the pending-request count endpoint so it is reachable at the
 // exact spec'd path /api/admin-requests/count as well as /api/admin/requests/count.

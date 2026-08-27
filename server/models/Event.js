@@ -26,6 +26,7 @@ const eventSchema = new mongoose.Schema({
   contact:     { type: String, trim: true, default: '' },
   capacity:    { type: Number, default: 0, min: 0 },
   flyerUrl:    { type: String, required: [true, 'Flyer image is required'] },
+  flyerUploadId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Upload', default: null },
   createdBy:   { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
   attendees:   [attendeeSchema],
   waitlist:    [waitlistSchema],
