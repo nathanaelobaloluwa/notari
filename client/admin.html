@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Club Exec Portal — NOTARI</title>
+  <meta name="description" content="Administrative event manager for university club executives and organizers.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon (placeholder; replace client/favicon.png with the real asset) -->
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <img src="Notari.png" alt="Notari logo" class="app-logo">
+      </div>
+
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-outline" id="btn-public-board">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Student View</span>
+        </a>
+
+        <button id="btn-logout" class="btn btn-ghost" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Sign Out</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="12" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" style="display: none;" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Admin Workspace -->
+  <main class="container" style="padding-top: 2rem; padding-bottom: 5rem;">
+    
+    <!-- 1. LOGIN GATE VIEW (Displayed when not authenticated) -->
+    <section id="admin-login-view" style="display: none; max-width: 440px; margin: 3rem auto;">
+      <div style="background-color: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.25rem; box-shadow: var(--shadow-modal);">
+        <div style="margin-bottom: 1.5rem; text-align: center;">
+          <h2 style="font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; color: var(--ink);">Club Executive Gate</h2>
+          <p style="color: var(--ink-muted); font-size: 0.9rem; margin-top: 0.35rem;">Sign in to pin, edit, or manage campus event notices.</p>
+        </div>
+
+        <form id="admin-login-form" novalidate>
+          <div class="form-group">
+            <label for="login-username" class="form-label">Username</label>
+            <input type="text" id="login-username" class="form-input" placeholder="e.g. admin" required autocomplete="username">
+            <span class="form-error" id="login-username-error">Username is required.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password" class="form-label">Password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="login-password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="password-toggle" data-target="login-password" aria-label="Show password" title="Show password">
+                <svg class="pw-icon-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <svg class="pw-icon-hide" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 1l22 22"></path>
+                  <path d="M1 12s4-7 11-7 9.5 5.5 10 7-1.5 5.5-4 7-6 2-6-2"></path>
+                </svg>
+              </button>
+            </div>
+            <span class="form-error" id="login-password-error">Password is required.</span>
+          </div>
+
+          <div id="login-alert" class="form-error" style="margin-bottom: 1.25rem;"></div>
+
+          <button type="submit" id="btn-login-submit" class="btn btn-primary" style="width: 100%;">
+            Sign In to Back Office
+          </button>
+        </form>
+
+        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--ink-muted); text-align: center;">
+          Default credentials: <code>admin</code> / <code>notari2026</code>
+        </div>
+
+        <div style="margin-top: 1.25rem; text-align: center;">
+          <a href="#" id="btn-request-admin-access" style="color: var(--accent); font-size: 0.85rem; text-decoration: underline;">
+            Request Admin Access
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DASHBOARD VIEW (Displayed when authenticated) -->
+    <section id="admin-dashboard-view" style="display: none;">
+      <!-- Dashboard Top Header -->
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 2rem;">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.08em;">Executive Console</span>
+          <h2 style="font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--ink); line-height: 1.1;">Campus Event Manager</h2>
+        </div>
+
+        <button id="btn-open-create-modal" class="btn btn-accent">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Pin New Event</span>
+        </button>
+
+        <button id="btn-open-requests-view" class="btn btn-outline" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Access Requests</span>
+        </button>
+
+        <button id="btn-notifications-bell" class="btn btn-outline btn-notification-bell" style="display: none;" aria-label="Pending admin access requests" title="Pending admin access requests">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span id="notifications-badge" class="notification-badge" style="display: none;">0</span>
+        </button>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="admin-stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Pinned Events</span>
+          <div class="stat-number" id="stat-total-events">0</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Total Reservations</span>
+          <div class="stat-number" id="stat-total-attendees">0</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Waitlisted Students</span>
+          <div class="stat-number" id="stat-total-waitlist">0</div>
+        </div>
+      </div>
+
+      <!-- Events Management Table Container -->
+      <div class="admin-table-wrapper">
+        <table class="admin-table" aria-label="Campus events database table">
+          <thead>
+            <tr>
+              <th>Event Title</th>
+              <th>Faculty</th>
+              <th>Organizer</th>
+              <th>Date & Time</th>
+              <th>Venue</th>
+              <th>Capacity</th>
+              <th>Attendees</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-events-tbody">
+            <!-- Dynamic rows injected via admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. SUPERADMIN: PENDING ACCESS REQUESTS VIEW -->
+    <!-- Kept as a SIBLING of the dashboard view (not nested) so it can be
+         displayed independently. Previously it was nested inside the dashboard
+         section, so hiding the dashboard also hid the requests view, leaving a
+         blank content area when superadmins opened Access Requests. -->
+    <section id="admin-requests-view" style="display: none;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 2rem;">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--accent-2); letter-spacing: 0.08em;">Superadmin Console</span>
+          <h2 style="font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--ink); line-height: 1.1;">Pending Access Requests</h2>
+        </div>
+
+        <button id="btn-back-to-dashboard" class="btn btn-outline" style="min-height: 36px; padding: 0.35rem 0.9rem; font-size: 0.85rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to Event Manager
+        </button>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table" aria-label="Pending admin access requests">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Club Name</th>
+              <th>Email</th>
+              <th>Identification</th>
+              <th>Requested</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pending-requests-tbody">
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 2rem; color: var(--ink-muted);">
+                Loading pending requests...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- SIGNUP / REQUEST ADMIN ACCESS MODAL -->
+  <div id="signup-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="signup-modal-title">
+    <div class="modal-dialog" style="max-width: 520px;">
+      <div class="modal-header">
+        <div>
+          <span class="card-tag" id="signup-modal-eyebrow">REQUEST ACCESS</span>
+          <h3 class="modal-title" id="signup-modal-title" style="margin-top: 0.35rem;">Request Admin Access</h3>
+        </div>
+        <button class="modal-close-btn" id="btn-close-signup-modal" aria-label="Close modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="admin-signup-form" novalidate>
+        <div class="form-group">
+          <label for="signup-username" class="form-label">Username <span class="required-star">*</span></label>
+          <input type="text" id="signup-username" class="form-input" placeholder="e.g. club_president" required autocomplete="username">
+          <span class="form-error" id="signup-username-error">Please enter a username.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="signup-email" class="form-label">Email <span class="required-star">*</span></label>
+          <input type="email" id="signup-email" class="form-input" placeholder="e.g. president@club.edu" required autocomplete="email">
+          <span class="form-error" id="signup-email-error">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="signup-club" class="form-label">Club / Organization Name</label>
+          <input type="text" id="signup-club" class="form-input" placeholder="e.g. Robotics Guild" autocomplete="organization">
+          <span class="form-hint">The club or organization you represent.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="signup-identification" class="form-label">Upload Identification <span class="required-star">*</span></label>
+          <input type="file" id="signup-identification" class="form-input" accept="image/*" required>
+          <span class="form-error" id="signup-identification-error">An identification image is required to request admin access.</span>
+          <span class="form-hint">Upload a photo of your student ID or your club's membership card/document — either is accepted.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="signup-password" class="form-label">Password <span class="required-star">*</span></label>
+          <div class="password-input-wrapper">
+            <input type="password" id="signup-password" class="form-input" placeholder="Choose a secure password" required autocomplete="new-password">
+            <button type="button" class="password-toggle" data-target="signup-password" aria-label="Show password" title="Show password">
+              <svg class="pw-icon-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="pw-icon-hide" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 1l22 22"></path>
+                <path d="M1 12s4-7 11-7 9.5 5.5 10 7-1.5 5.5-4 7-6 2-6-2"></path>
+              </svg>
+            </button>
+          </div>
+          <span class="form-error" id="signup-password-error">Password must be at least 6 characters.</span>
+        </div>
+
+        <p style="font-size: 0.8rem; color: var(--ink-muted); margin: 0 0 1.25rem 0;">
+          By signing up, you agree to our <a href="privacy.html" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">Privacy Policy</a>.
+        </p>
+
+        <div id="signup-error-feedback" class="form-error" style="margin-bottom: 1.25rem;"></div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn btn-outline" id="btn-cancel-signup">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-signup">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CREATE / EDIT EVENT MODAL -->
+  <div id="event-form-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="form-modal-title">
+    <div class="modal-dialog" style="max-width: 640px;">
+      <div class="modal-header">
+        <div>
+          <span class="card-tag" id="form-modal-eyebrow">NOTICE CREATOR</span>
+          <h3 class="modal-title" id="form-modal-title" style="margin-top: 0.35rem;">Pin Event to Board</h3>
+        </div>
+        <button class="modal-close-btn" id="btn-close-form-modal" aria-label="Close modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="event-editor-form" novalidate>
+        <input type="hidden" id="edit-event-id">
+
+        <div class="form-group">
+          <label for="ev-name" class="form-label">Event Name <span class="required-star">*</span></label>
+          <input type="text" id="ev-name" class="form-input" placeholder="e.g. AI & Robotics Annual Showcase" required>
+          <span class="form-error" id="ev-name-error">Please enter the event name.</span>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="ev-organizer" class="form-label">Organizer / Club <span class="required-star">*</span></label>
+            <input type="text" id="ev-organizer" class="form-input" placeholder="e.g. Robotics Guild" required>
+            <span class="form-error" id="ev-organizer-error">Organizer is required.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="ev-faculty" class="form-label">Faculty / Category</label>
+            <select id="ev-faculty" class="form-select">
+              <option value="General">General Campus</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Sciences">Sciences</option>
+              <option value="Business & Law">Business & Law</option>
+              <option value="Arts & Humanities">Arts & Humanities</option>
+              <option value="Health Sciences">Health Sciences</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="ev-date" class="form-label">Date & Time <span class="required-star">*</span></label>
+            <input type="datetime-local" id="ev-date" class="form-input" required>
+            <span class="form-error" id="ev-date-error">Valid date and time required.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="ev-venue" class="form-label">Venue / Room <span class="required-star">*</span></label>
+            <input type="text" id="ev-venue" class="form-input" placeholder="e.g. Hall 3B, Science Complex" required>
+            <span class="form-error" id="ev-venue-error">Venue is required.</span>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="ev-capacity" class="form-label">Max Capacity (0 = Unlimited)</label>
+            <input type="number" id="ev-capacity" class="form-input" min="0" value="0" placeholder="0">
+            <span class="form-hint">Set 0 for open seating without a ticket cap.</span>
+          </div>
+
+        <div class="form-group">
+          <label for="ev-contact" class="form-label">Contact Email / Phone</label>
+          <input type="text" id="ev-contact" class="form-input" placeholder="e.g. contact@club.edu">
+        </div>
+
+        <div class="form-group">
+          <label for="ev-flyer" class="form-label">Event Flyer <span class="required-star">*</span></label>
+          <input type="file" id="ev-flyer" class="form-input" accept="image/*" required>
+          <span class="form-error" id="ev-flyer-error">Please attach a flyer image.</span>
+          <span class="form-hint">Upload a poster or flyer image (JPG, PNG, GIF, WebP)</span>
+        </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ev-description" class="form-label">Event Description</label>
+          <textarea id="ev-description" class="form-textarea" placeholder="Brief outline of agenda, requirements, or speaker bios..."></textarea>
+        </div>
+
+        <div id="form-error-feedback" class="form-error" style="margin-bottom: 1.25rem;"></div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn btn-outline" id="btn-cancel-form">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-event">Save & Pin Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ATTENDEES ROSTER MODAL -->
+  <div id="attendees-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="attendees-modal-title">
+    <div class="modal-dialog" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <span class="card-tag">ATTENDEE ROSTER</span>
+          <h3 class="modal-title" id="attendees-modal-title" style="margin-top: 0.35rem;">Guest List</h3>
+        </div>
+        <button class="modal-close-btn" id="btn-close-attendees-modal" aria-label="Close modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <span id="attendee-count-badge" class="ticket-detail-val">0 Confirmed Attendees</span>
+        <button id="btn-export-csv" class="btn btn-outline" style="min-height: 36px; padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+          Download CSV
+        </button>
+      </div>
+
+      <div style="max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: 1.5rem;">
+        <table class="admin-table" style="font-size: 0.85rem;">
+          <thead>
+            <tr>
+              <th>Ticket Code</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Booked At</th>
+            </tr>
+          </thead>
+          <tbody id="attendees-table-body">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="waitlist-section" style="display: none;">
+        <h4 style="font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; color: var(--accent-2); margin-bottom: 0.5rem;">
+          Waitlist Queue
+        </h4>
+        <div style="max-height: 200px; overflow-y: auto; border: 1px solid var(--line); border-radius: var(--radius);">
+          <table class="admin-table" style="font-size: 0.85rem;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody id="waitlist-table-body">
+              <!-- Waitlist rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve Pass — NOTARI</title>
+  <meta name="description" content="Reserve your pass or check registration status on the NOTARI campus event notice board.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon (placeholder; replace client/favicon.png with the real asset) -->
+  <link rel="icon" type="image/png" href="Notari.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <img src="logo.png" alt="Notari logo" class="app-logo">
+      <a href="index.html" class="brand-wrapper" aria-label="Back to NOTARI notice board">
+        <span class="brand-pin" aria-hidden="true"></span>
+        <span class="brand-logo">NOTARI</span>
+        <span class="brand-tagline">Campus Pass</span>
+      </a>
+
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>All Postings</span>
+        </a>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="12" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" style="display: none;" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container" style="padding: 2rem 1.25rem 4rem 1.25rem;">
+    <!-- Container for dynamic render (Form vs Confirmed Pass vs Error) -->
+    <div id="pass-content-area" aria-live="polite">
+      <!-- Loading Skeleton -->
+      <div class="state-box">
+        <div class="skeleton-bone" style="height: 28px; width: 60%; margin: 0 auto 1rem auto;"></div>
+        <div class="skeleton-bone" style="height: 18px; width: 40%; margin: 0 auto 1.5rem auto;"></div>
+        <div class="skeleton-bone" style="height: 48px; width: 80%; margin: 0 auto;"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>NOTARI</strong> — University Event Notice Board</div>
+      <div>Present your digital pass or ticket code at the entrance</div>
+      <div>
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/register.js"></script>
+</body>
+</html>

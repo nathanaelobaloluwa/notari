@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — NOTARI</title>
+  <meta name="description" content="NOTARI privacy policy: what data we collect, how it is stored, who can access it, and how identification images are used for admin verification.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon (placeholder; replace client/favicon.png with the real asset) -->
+  <link rel="icon" type="image/png" href="Notari.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <img src="logo.png" alt="Notari logo" class="app-logo">
+      <a href="index.html" class="brand-wrapper" aria-label="NOTARI Home">
+        <span class="brand-pin" aria-hidden="true"></span>
+        <span class="brand-logo">NOTARI</span>
+      </a>
+
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" style="display: none;" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container" style="padding-top: 3rem; padding-bottom: 5rem; max-width: 720px; margin: 0 auto;">
+    <article>
+      <header style="margin-bottom: 2.25rem;">
+        <span class="card-tag" style="margin-bottom: 0.75rem; display: inline-block;">Privacy</span>
+        <h1 style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--ink); line-height: 1.1; margin-bottom: 0.5rem;">Privacy Policy</h1>
+        <p style="color: var(--ink-muted); font-size: 0.9rem;">Last updated: August 2026</p>
+      </header>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; color: var(--ink-muted); font-size: 0.975rem; line-height: 1.7;">
+
+        <p>
+          NOTARI ("we", "us", or "the notice board") respects your privacy. This policy explains what information
+          we collect, how we store it, who can access it, and how identification images submitted during admin
+          signup are used.
+        </p>
+
+        <section>
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem;">1. What data we collect</h2>
+          <ul style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.25rem;">
+            <li><strong>Event registration details:</strong> the name and email you provide when reserving a seat for a campus event.</li>
+            <li><strong>Admin signup details:</strong> username, email, club/organization name, password (stored only as a salted hash) and an identification image uploaded to request admin access.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem;">2. How information is stored</h2>
+          <p>
+            All event registrations, admin accounts, and uploaded images are stored in a password-protected
+            <strong> MongoDB Atlas</strong> cluster hosted in the cloud. Passwords are never stored in plain
+            text — they are hashed with bcrypt before being written. Uploaded images are kept on the server's
+            local filesystem under the <code style="background: color-mix(in srgb, var(--line) 30%, transparent); padding: 0.1rem 0.35rem; border-radius: 4px;">uploads/</code>
+            directory.
+          </p>
+        </section>
+
+        <section>
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem;">3. Who can access what</h2>
+          <ul style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.25rem;">
+            <li><strong>Identification images:</strong> viewable only by the superadmin, after authenticating, from the Access Requests dashboard in the Back Office.</li>
+            <li><strong>Event attendee lists:</strong> visible only to the organizer who created that event (or a superadmin).</li>
+            <li><strong>Student registration data:</strong> used solely to confirm your seat and issue your digital ticket pass. It is not shared with third parties.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem;">4. Purpose of identification images</h2>
+          <p>
+            Identification images uploaded during an admin access request are collected <strong>solely for verifying
+            eligibility for admin access</strong> and are reviewed only by the superadmin. They are <strong>not displayed publicly</strong>,
+            not embedded in emails, and not shared with any other party.
+          </p>
+        </section>
+
+        <section>
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem;">5. Questions</h2>
+          <p>
+            Need to update or remove your data? Contact the superadmin through the Back Office or reach out to
+            <code style="background: color-mix(in srgb, var(--line) 30%, transparent); padding: 0.1rem 0.35rem; border-radius: 4px;">campus.events@univ.edu</code>.
+          </p>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><strong>NOTARI</strong> — University Event Notice Board</div>
+      <div>© 2026 NOTARI. All rights reserved.</div>
+      <div>
+        <a href="privacy.html" style="color: var(--ink-muted); text-decoration: underline; font-size: 0.875rem;">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Client JavaScript (theme toggle parity with other pages) -->
+  <script>
+    (function () {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const sunIcon = themeToggleBtn.querySelector('.sun-icon');
+      const moonIcon = themeToggleBtn.querySelector('.moon-icon');
+
+      function initTheme() {
+        const savedTheme = localStorage.getItem('notari_theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+      }
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('notari_theme', theme);
+        if (theme === 'dark') {
+          sunIcon.style.display = 'none';
+          moonIcon.style.display = 'block';
+        } else {
+          sunIcon.style.display = 'block';
+          moonIcon.style.display = 'none';
+        }
+      }
+
+      themeToggleBtn.addEventListener('click', function () {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      });
+
+      initTheme();
+    })();
+  </script>
+</body>
+</html>
