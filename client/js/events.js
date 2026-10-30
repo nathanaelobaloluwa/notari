@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeTimeframe = '';
   let searchQuery = '';
   let searchDebounceTimeout = null;
+  let activeAbortController = null;
   let includePast = false;
 
   // DOM Elements - Navigation & Discovery
+  const heroSearchForm = document.getElementById('hero-search-form');
   const searchInput = document.getElementById('event-search');
   const btnClearSearch = document.getElementById('btn-clear-search');
   const btnSubmitSearch = document.getElementById('btn-submit-search');
@@ -132,6 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Fetch & Render Notice Board Events
   // ----------------------------------------------------
   async function loadEvents() {
+    if (activeAbortController) {
+      activeAbortController.abort();
+    }
+    activeAbortController = new AbortController();
+    const { signal } = activeAbortController;
+
     renderLoadingSkeleton();
 
     try {
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         params.append('includePast', 'true');
       }
 
-      const res = await fetch(`/api/events?${params.toString()}`);
+      const res = await fetch(`/api/events?${params.toString()}`, { signal });
       if (!res.ok) {
         throw new Error(`Server returned status ${res.status}`);
       }
@@ -158,6 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
       currentEvents = data.events || [];
       renderAll(currentEvents);
     } catch (err) {
+      if (err.name === 'AbortError') {
+        return;
+      }
       console.error('[NOTARI Fetch Error]', err);
       renderErrorState();
     }
@@ -658,6 +669,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // ----------------------------------------------------
   // 5. Search & Filters Interaction
   // ----------------------------------------------------
+  if (heroSearchForm) {
+    heroSearchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearTimeout(searchDebounceTimeout);
+      if (searchInput) {
+        searchQuery = searchInput.value;
+      }
+      loadEvents();
+    });
+  }
+
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       clearTimeout(searchDebounceTimeout);
