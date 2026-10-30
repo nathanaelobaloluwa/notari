@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalEventTitle = document.getElementById('modal-event-title');
   const modalEventFaculty = document.getElementById('modal-event-faculty');
   const modalEventMeta = document.getElementById('modal-event-meta');
+  const modalEventDesc = document.getElementById('modal-event-desc');
   const bookingNameInput = document.getElementById('booking-name');
   const bookingEmailInput = document.getElementById('booking-email');
   const bookingNameError = document.getElementById('booking-name-error');
@@ -519,6 +520,20 @@ document.addEventListener('DOMContentLoaded', () => {
       <div><strong>Availability:</strong> ${event.capacity === 0 ? 'Open Seating' : (isFull ? 'Event is currently full' : `${seatsLeft} seats remaining`)}</div>
     `;
 
+    // Event Description Box
+    if (modalEventDesc) {
+      if (event.description && event.description.trim()) {
+        modalEventDesc.innerHTML = `
+          <div class="modal-section-subtitle">About this event</div>
+          <p class="modal-description-text">${escapeHtml(event.description)}</p>
+        `;
+        modalEventDesc.style.display = 'block';
+      } else {
+        modalEventDesc.style.display = 'none';
+        modalEventDesc.innerHTML = '';
+      }
+    }
+
     if (isPast) {
       btnSubmitBooking.textContent = 'Registration Closed';
       btnSubmitBooking.disabled = true;
@@ -538,12 +553,14 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingEmailError.classList.remove('visible');
     bookingStatusBox.style.display = 'none';
 
+    document.body.style.overflow = 'hidden';
     bookingModal.classList.add('active');
     bookingNameInput.focus();
   }
 
   function closeBookingModal() {
     bookingModal.classList.remove('active');
+    document.body.style.overflow = '';
   }
 
   modalCloseBtn?.addEventListener('click', closeBookingModal);

@@ -1343,6 +1343,33 @@ button, input, select, textarea {
   }
 }
 
+.modal-description-box {
+  margin-top: calc(-1 * var(--space-2));
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.modal-section-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  margin-bottom: 0.35rem;
+}
+
+.modal-description-text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+  white-space: pre-line;
+}
+
 .card-category-badge {
   font-family: var(--font-body);
   font-size: var(--text-xs);
