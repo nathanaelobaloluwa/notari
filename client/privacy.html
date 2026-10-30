@@ -2,6 +2,16 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('notari_theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — NOTARI</title>
   <meta name="description" content="NOTARI privacy policy: what data we collect, how it is stored, who can access it, and how identification images are used for admin verification.">
