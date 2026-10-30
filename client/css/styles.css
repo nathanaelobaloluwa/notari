@@ -1062,6 +1062,15 @@ button, input, select, textarea {
   background-color: var(--status-error-bg);
 }
 
+.seat-pill.past {
+  color: var(--ink-muted);
+  background-color: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.event-card-modern.is-past-event {
+  opacity: 0.88;
+}
+
 .seat-dot {
   width: 6px;
   height: 6px;

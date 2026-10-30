@@ -357,9 +357,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Bottom Action Row -->
           <div class="featured-bottom-row">
-            <span class="seat-pill ${isFull ? 'full' : ''}">
+            <span class="seat-pill ${isPast ? 'past' : (isFull ? 'full' : '')}">
               <span class="seat-dot"></span>
-              ${isUnlimited ? 'Open seating' : (isFull ? 'Event Full' : `${seatsLeft} seats left`)}
+              ${isPast ? 'Event ended' : (isUnlimited ? 'Open seating' : (isFull ? 'Event Full' : `${seatsLeft} seats left`))}
             </span>
 
             <button type="button" class="btn-primary-orange btn-open-booking" data-id="${event._id}" data-full="${isFull}">
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const flyerUrl = resolveFlyerUrl(event, idx);
 
       return `
-        <article class="event-card-modern" data-id="${event._id}">
+        <article class="event-card-modern ${isPast ? 'is-past-event' : ''}" data-id="${event._id}">
           <!-- Flyer Image Box with Category Tag -->
           <div class="card-flyer-box">
             <img 
@@ -446,12 +446,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Footer: Seats Pill + Circular Action Button -->
             <div class="card-footer-modern">
-              <span class="seat-pill ${isFull ? 'full' : ''}">
+              <span class="seat-pill ${isPast ? 'past' : (isFull ? 'full' : '')}">
                 <span class="seat-dot"></span>
-                ${isUnlimited ? 'Open' : (isFull ? 'Full' : `${seatsLeft} seats left`)}
+                ${isPast ? 'Ended' : (isUnlimited ? 'Open' : (isFull ? 'Full' : `${seatsLeft} seats left`))}
               </span>
 
-              <button type="button" class="btn-circle-arrow btn-open-booking" data-id="${event._id}" data-full="${isFull}" aria-label="View details and reserve seat for ${escapeHtml(event.eventName)}">
+              <button type="button" class="btn-circle-arrow btn-open-booking" data-id="${event._id}" data-full="${isFull}" aria-label="${isPast ? 'View details for' : 'View details and reserve seat for'} ${escapeHtml(event.eventName)}">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
@@ -528,7 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div><strong>Organizer:</strong> ${escapeHtml(event.organizer)}</div>
       <div><strong>When:</strong> ${eventDateStr}</div>
       <div><strong>Where:</strong> ${escapeHtml(event.venue)}</div>
-      <div><strong>Availability:</strong> ${event.capacity === 0 ? 'Open Seating' : (isFull ? 'Event is currently full' : `${seatsLeft} seats remaining`)}</div>
+      <div><strong>Availability:</strong> ${isPast ? 'Event has ended' : (event.capacity === 0 ? 'Open Seating' : (isFull ? 'Event is currently full' : `${seatsLeft} seats remaining`))}</div>
     `;
 
     // Event Description Box
