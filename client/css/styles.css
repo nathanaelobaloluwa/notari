@@ -460,6 +460,43 @@ code, kbd, samp, pre {
   gap: var(--space-3);
 }
 
+/* Public Navigation Links */
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (min-width: 860px) {
+  .site-nav {
+    display: flex;
+  }
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) ease, background-color var(--duration-fast) ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background-color: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.btn-admin-portal {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: var(--weight-semibold);
+}
+
 /* ==========================================================================
    5. COMPONENT FOUNDATION: BUTTONS
    ========================================================================== */
@@ -796,12 +833,14 @@ code, kbd, samp, pre {
 .search-input-wrapper {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
   width: 100%;
   min-height: var(--touch-target-min);
-  padding: 0.65rem 1rem 0.65rem 2.85rem;
+  padding: 0.65rem 3.5rem 0.65rem 2.85rem;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   background-color: var(--surface);
@@ -823,6 +862,85 @@ code, kbd, samp, pre {
   transform: translateY(-50%);
   color: var(--ink-muted);
   pointer-events: none;
+}
+
+.search-kbd {
+  position: absolute;
+  right: 2.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-xs);
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .search-kbd {
+    display: inline-block;
+  }
+}
+
+.btn-clear-search {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-pill);
+  min-height: 28px;
+  min-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--duration-fast) ease;
+}
+
+.btn-clear-search:hover {
+  color: var(--ink);
+}
+
+.filter-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.85rem;
+  background-color: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--line));
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--ink);
+  margin-top: 0.25rem;
+}
+
+.filter-status-row strong {
+  color: var(--primary);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-link:hover {
+  color: var(--primary-hover);
 }
 
 .filter-chips-row {
@@ -890,54 +1008,349 @@ code, kbd, samp, pre {
 }
 
 /* ==========================================================================
-   8. HERO BANNER
+   8. HERO SECTION (EDITORIAL + SAAS HYBRID)
    ========================================================================== */
 
 .hero-section {
-  padding: var(--space-8) 0 var(--space-6) 0;
+  padding: var(--space-10) 0 var(--space-8) 0;
   position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1.25fr 0.95fr;
+  }
 }
 
 .hero-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.hero-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-2xs);
   font-weight: var(--weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--primary);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
+  color: var(--secondary);
+  background-color: var(--secondary-subtle);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.35); }
+}
+
+.hero-term-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
 }
 
 .hero-title {
-  font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
   font-weight: var(--weight-extrabold);
   line-height: var(--leading-tight);
   letter-spacing: -0.035em;
   color: var(--ink);
 }
 
+.hero-title-accent {
+  color: var(--primary);
+  display: inline-block;
+}
+
 .hero-subtitle {
   font-size: var(--text-lg);
   color: var(--ink-muted);
-  max-width: var(--max-w-prose);
   line-height: var(--leading-normal);
+  max-width: 580px;
+}
+
+.hero-action-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-2);
+}
+
+/* Hero Right: Tactile Campus Bulletin Card */
+.hero-bulletin-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: transform var(--duration-slow) var(--ease-spring), box-shadow var(--duration-slow) var(--ease-spring);
+}
+
+.hero-bulletin-card::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: var(--secondary);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.hero-bulletin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.bulletin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: var(--space-3);
+}
+
+.bulletin-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: var(--weight-bold);
+  color: var(--ink);
+}
+
+.bulletin-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.bulletin-faculties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bulletin-faculty-pill {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-subtle);
+  color: var(--ink);
+  transition: background-color var(--duration-fast) ease;
+}
+
+.bulletin-faculty-pill:hover {
+  background-color: color-mix(in srgb, var(--primary) 15%, var(--surface));
+  color: var(--primary);
+}
+
+.bulletin-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+}
+
+.bulletin-footer svg {
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+/* --- Section Headers --- */
+.section-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 1.65rem;
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   8b. FEATURED HEADLINER EVENT PRESENTATION
+   ========================================================================== */
+
+.featured-section {
+  margin-bottom: var(--space-12);
+}
+
+.featured-event-card {
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  transition: transform var(--duration-slow) var(--ease-spring), box-shadow var(--duration-slow) var(--ease-spring), border-color var(--duration-fast) ease;
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  .featured-event-card {
+    grid-template-columns: 1.15fr 1fr;
+  }
+}
+
+.featured-event-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--line));
+}
+
+.featured-flyer-col {
+  position: relative;
+  background-color: var(--bg-subtle);
+  min-height: 280px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featured-flyer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.featured-event-card:hover .featured-flyer-img {
+  transform: scale(1.03);
+}
+
+.featured-flyer-badge {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  background-color: var(--primary);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+
+.featured-content-col {
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.featured-eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.featured-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: var(--weight-extrabold);
+  line-height: var(--leading-tight);
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  cursor: pointer;
+  transition: color var(--duration-fast) ease;
+}
+
+.featured-title:hover {
+  color: var(--primary);
+}
+
+.featured-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.featured-description {
+  font-size: var(--text-base);
+  color: var(--ink-muted);
+  line-height: var(--leading-normal);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featured-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  flex-wrap: wrap;
 }
 
 /* ==========================================================================
    9. CARDS & EDITORIAL NOTICE BOARD GRID
    ========================================================================== */
 
+.notice-board-section {
+  position: relative;
+}
+
 .notice-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-8) var(--space-6);
   padding-bottom: var(--space-16);
 }
@@ -947,31 +1360,35 @@ code, kbd, samp, pre {
   background-color: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
   transition: transform var(--duration-slow) var(--ease-spring), 
               box-shadow var(--duration-slow) var(--ease-spring), 
               border-color var(--duration-fast) ease;
   transform-origin: center center;
 }
 
-/* Signature Editorial Pushpin */
+.event-card:not(.has-flyer) {
+  padding: var(--space-6);
+}
+
+/* Signature Editorial Pushpin (Anchored at top center of card) */
 .event-card::before {
   content: '';
   position: absolute;
-  top: -7px;
+  top: 8px;
   left: 50%;
   transform: translateX(-50%);
   width: 14px;
   height: 14px;
   background-color: var(--primary);
   border-radius: var(--radius-pill);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.28), inset 0 1px 2px rgba(255,255,255,0.45);
-  z-index: 5;
-  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.32), inset 0 1px 2px rgba(255,255,255,0.45);
+  z-index: 10;
+  border: 1px solid rgba(0,0,0,0.15);
 }
 
 /* Subtle organic rotation on notice board cards */
@@ -993,6 +1410,98 @@ code, kbd, samp, pre {
   box-shadow: var(--shadow-hover);
   border-color: color-mix(in srgb, var(--primary) 40%, var(--line));
   z-index: 10;
+}
+
+/* Flyer Image Presentation on Card */
+.card-flyer-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: var(--bg-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-flyer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.event-card:hover .card-flyer-img {
+  transform: scale(1.05);
+}
+
+/* Overlay Badges on Flyer */
+.card-flyer-overlay {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  z-index: 4;
+}
+
+/* Fallback Graphic when no flyer image exists */
+.card-flyer-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 12%, var(--surface)), color-mix(in srgb, var(--secondary) 14%, var(--bg-subtle)));
+  color: var(--ink);
+  padding: var(--space-4);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-flyer-fallback::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px);
+  background-size: 14px 14px;
+  opacity: 0.65;
+}
+
+.fallback-monogram {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: var(--weight-extrabold);
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 2;
+}
+
+.fallback-faculty {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  position: relative;
+  z-index: 2;
+}
+
+/* Card Content Body */
+.card-body {
+  padding: var(--space-5) var(--space-6) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 /* Card Header & Eyebrow */
@@ -1062,6 +1571,12 @@ code, kbd, samp, pre {
   color: var(--ink);
   margin-bottom: var(--space-3);
   word-break: break-word;
+  cursor: pointer;
+  transition: color var(--duration-fast) ease;
+}
+
+.card-title:hover {
+  color: var(--primary);
 }
 
 /* Meta List (Date, Time, Venue) */
@@ -1463,6 +1978,44 @@ code, kbd, samp, pre {
 .modal-close-btn:hover {
   color: var(--ink);
   background-color: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+/* Modal Flyer Banner */
+.modal-flyer-banner {
+  width: calc(100% + var(--space-8) * 2);
+  margin-top: calc(-1 * var(--space-8));
+  margin-left: calc(-1 * var(--space-8));
+  margin-right: calc(-1 * var(--space-8));
+  margin-bottom: var(--space-6);
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  background-color: var(--bg-subtle);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-flyer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 480px) {
+  .modal-meta-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ==========================================================================
