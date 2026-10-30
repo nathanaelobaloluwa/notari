@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM Elements - Theme Toggles
   const themeToggleBtn = document.getElementById('theme-toggle');
   const footerThemeToggle = document.getElementById('footer-theme-toggle');
-  const sunIcon = themeToggleBtn.querySelector('.sun-icon');
-  const moonIcon = themeToggleBtn.querySelector('.moon-icon');
+  const sunIcons = document.querySelectorAll('#theme-toggle .sun-icon, #footer-theme-toggle .sun-icon');
+  const moonIcons = document.querySelectorAll('#theme-toggle .moon-icon, #footer-theme-toggle .moon-icon');
 
   // DOM Elements - Event Displays
   const featuredCardContainer = document.getElementById('featured-card-container');
@@ -105,11 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('notari_theme', theme);
 
     if (theme === 'dark') {
-      sunIcon.style.display = 'none';
-      moonIcon.style.display = 'block';
+      sunIcons.forEach(icon => { icon.style.display = 'none'; });
+      moonIcons.forEach(icon => { icon.style.display = 'block'; });
     } else {
-      sunIcon.style.display = 'block';
-      moonIcon.style.display = 'none';
+      sunIcons.forEach(icon => { icon.style.display = 'block'; });
+      moonIcons.forEach(icon => { icon.style.display = 'none'; });
     }
   }
 
